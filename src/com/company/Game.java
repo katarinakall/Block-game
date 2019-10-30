@@ -1,5 +1,9 @@
 package com.company;
 
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+
 public class Game implements Runnable{
     private Display display;
     public String title;
@@ -7,6 +11,11 @@ public class Game implements Runnable{
 
     private boolean running = false;
     private Thread thread;
+
+    private BufferStrategy bs;
+    private Graphics g;
+
+    private BufferedImage testImage;
 
     public Game(String title, int width, int height){
         this.title = title;
@@ -17,6 +26,7 @@ public class Game implements Runnable{
 
     private void init(){
         display = new Display(title, width, height);
+        testImage = ImageLoader.loadImage("/textures/Sheep.png");
     }
 
     private void tick(){
@@ -24,7 +34,21 @@ public class Game implements Runnable{
     }
 
     private void render(){
+        bs = display.getCanvas().getBufferStrategy();
+        if(bs == null){
+            display.getCanvas().createBufferStrategy(3);
+            return;
+        }
+        g = bs.getDrawGraphics();
+        //Clear screen
+        g.clearRect(0, 0, width, height);
 
+        //Draw here!
+       g.drawImage(testImage, 20, 20, null);
+
+        //End drawing!
+        bs.show();
+        g.dispose();
     }
 
     public void run(){
