@@ -19,24 +19,30 @@ public class Game implements Runnable {
     private State gameState;
     private State menueState;
 
+    //Input
+    private KeyManager keyManager;
+
     public Game(String title, int width, int height) {
         this.title = title;
         this.width = width;
         this.height = height;
-
+        keyManager = new KeyManager();
     }
 
     private void init() {
         display = new Display(title, width, height);
+        display.getFrame().addKeyListener(keyManager);
         Assets.init();
 
-        gameState = new GameState();
-        menueState = new MenueState();
+        gameState = new GameState(this);
+        menueState = new MenueState(this);
         State.setState(gameState);
     }
 
 
     private void tick() {
+        keyManager.tick();
+
         if(State.getState() != null){
             State.getState().tick();
         }
@@ -94,6 +100,10 @@ public class Game implements Runnable {
         }
 
         stop();
+    }
+
+    public KeyManager getKeyManager(){
+        return keyManager;
     }
 
     public synchronized void start() {
