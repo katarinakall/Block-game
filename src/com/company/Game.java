@@ -2,12 +2,11 @@ package com.company;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 public class Game implements Runnable {
     private Display display;
     public String title;
-    public int width, height;
+    private int width, height;
 
     private boolean running = false;
     private Thread thread;
@@ -22,6 +21,9 @@ public class Game implements Runnable {
     //Input
     private KeyManager keyManager;
 
+    //Camera
+    private GameCamera gameCamera;
+
     public Game(String title, int width, int height) {
         this.title = title;
         this.width = width;
@@ -33,6 +35,8 @@ public class Game implements Runnable {
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
         Assets.init();
+
+        gameCamera = new GameCamera(0,0);
 
         gameState = new GameState(this);
         menueState = new MenueState(this);
@@ -104,6 +108,18 @@ public class Game implements Runnable {
 
     public KeyManager getKeyManager(){
         return keyManager;
+    }
+
+    public GameCamera getGameCamera(){
+        return gameCamera;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public synchronized void start() {
