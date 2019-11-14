@@ -9,7 +9,7 @@ public class GameState extends State {
 
     public GameState(Game game) {
         super(game);
-        player = new Player(game,100, 100);
+        player = new Player(game,0, 130);
         world = new World(game, "res/worlds/world1.txt");
 
     }
