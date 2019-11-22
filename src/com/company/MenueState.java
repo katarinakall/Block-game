@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class MenueState extends State {
 
-    public MenueState(Game game) {
-        super(game);
+    public MenueState(Handler handler) {
+        super(handler);
     }
 
     @Override

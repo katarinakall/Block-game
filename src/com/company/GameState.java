@@ -7,10 +7,10 @@ public class GameState extends State {
     private Player player;
     private World world;
 
-    public GameState(Game game) {
-        super(game);
-        player = new Player(game,0, 130);
-        world = new World(game, "res/worlds/world1.txt");
+    public GameState(Handler handler) {
+        super(handler);
+        player = new Player(handler.getGame(),0, 130);
+        world = new World(handler.getGame(), "res/worlds/world1.txt");
 
     }
 
